@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juliana & Felipe - Nosso Casamento</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="heart-animation">
+                <i class="fas fa-heart"></i>
+            </div>
+            <p>Carregando nosso momento especial...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="couple-names">J&F</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Nossa História</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#details" class="nav-link">Detalhes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#gifts" class="nav-link">Lista de Presentes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contato</a>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="bride-name" id="bride-name">Juliana</span>
+                    <span class="ampersand">&</span>
+                    <span class="groom-name" id="groom-name">Felipe</span>
+                </h1>
+                <p class="hero-subtitle">Celebrando nosso amor eterno</p>
+                <div class="wedding-date" id="wedding-date">
+                    <i class="fas fa-calendar-heart"></i>
+                    <span>18 de Outubro, 2025</span>
+                </div>
+            </div>
+            <div class="countdown-container">
+                <h3>Contagem Regressiva</h3>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">0</span>
+                        <span class="countdown-label">Dias</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">0</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">0</span>
+                        <span class="countdown-label">Minutos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">0</span>
+                        <span class="countdown-label">Segundos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <a href="#gifts" class="cta-button primary">
+                    <i class="fas fa-gift"></i>
+                    Ver Lista de Presentes
+                </a>
+                <a href="#details" class="cta-button secondary">
+                    <i class="fas fa-info-circle"></i>
+                    Detalhes do Evento
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nossa História</h2>
+                <p class="section-subtitle">Uma jornada de amor que começou há alguns anos</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="love-story">
+                        <div class="story-item">
+                            <div class="story-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="story-content">
+                                <h3>Como nos conhecemos</h3>
+                                <p>Nossos caminhos se cruzaram de forma mágica em 2023, e desde então sabemos que fomos feitos um para o outro.</p>
+                            </div>
+                        </div>
+                        <div class="story-item">
+                            <div class="story-icon">
+                                <i class="fas fa-ring"></i>
+                            </div>
+                            <div class="story-content">
+                                <h3>O Pedido</h3>
+                                <p>Em um momento inesquecível, decidimos oficializar nosso amor e começar esta nova jornada juntos.</p>
+                            </div>
+                        </div>
+                        <div class="story-item">
+                            <div class="story-icon">
+                                <i class="fas fa-church"></i>
+                            </div>
+                            <div class="story-content">
+                                <h3>O Grande Dia</h3>
+                                <p>Agora chegou o momento de celebrar nosso amor com as pessoas mais especiais de nossas vidas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Details Section -->
+    <section id="details" class="details">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Detalhes do Casamento</h2>
+                <p class="section-subtitle">Todas as informações importantes sobre nosso grande dia</p>
+            </div>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Data</h3>
+                    <p id="ceremony-date">18 de Outubro, 2025</p>
+                    <span id="ceremony-time">15:30</span>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Local</h3>
+                    <p id="venue-name">Espaço Colinas Eventos</p>
+                    <span id="venue-address">Estr. Colina, 33 - Parque Primavera, Poços de Caldas - MG, 37700-001</span>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Cronograma</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span class="time">15:30</span>
+                            <span class="event">Cerimônia</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="time">19:00</span>
+                            <span class="event">Jantar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gifts Section -->
+    <section id="gifts" class="gifts">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Lista de Presentes</h2>
+                <p class="section-subtitle">Sua presença é o maior presente, mas se desejar nos presentear, ficamos muito gratos!</p>
+            </div>
+            
+            <!-- Gift Stats -->
+            <div class="gift-stats" id="gift-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="total-gifts">0</span>
+                    <span class="stat-label">Total de Presentes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="available-gifts">0</span>
+                    <span class="stat-label">Disponíveis</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="reserved-gifts">0</span>
+                    <span class="stat-label">Reservados</span>
+                </div>
+            </div>
+
+            <!-- Gift Categories Filter -->
+            <div class="gift-filters">
+                <button class="filter-btn active" data-category="all">Todos</button>
+                <div id="category-filters"></div>
+            </div>
+
+            <!-- Gift Grid -->
+            <div class="gift-grid" id="gift-grid">
+                <!-- Gifts will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contato</h2>
+                <p class="section-subtitle">Entre em contato conosco para qualquer dúvida</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>(35) 98708-8204</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>felipetexgol@outlook.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-instagram"></i>
+                        <div>
+                            <h4>Instagram</h4>
+                            <p>@coeteixeira_</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2025 Juliana & Felipe. Feito com <i class="fas fa-heart"></i> para nosso grande dia.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Gift Reservation Modal -->
+    <div id="gift-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Reservar Presente</h3>
+                <span class="close" id="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="gift-details" id="modal-gift-details">
+                    <!-- Gift details will be loaded here -->
+                </div>
+                <form id="reservation-form">
+                    <div class="form-group">
+                        <label for="guest-name">Seu Nome:</label>
+                        <input type="text" id="guest-name" name="guest-name" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" id="cancel-reservation">Cancelar</button>
+                        <button type="submit" class="btn-reserve">Reservar Presente</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
