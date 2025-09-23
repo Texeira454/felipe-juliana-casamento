@@ -43,31 +43,14 @@ class WeddingSite {
     }
 
     async loadWeddingData() {
-        try {
-            const response = await fetch('/api/wedding-info');
-            if (response.ok) {
-                this.weddingData = await response.json();
-            } else {
-                this.weddingData = {
-                    bride_name: 'Juliana',
-                    groom_name: 'Felipe',
-                    wedding_date: '2025-10-18', 
-                    wedding_time: '15:30:00',
-                    venue_name: 'Espaço Colinas Eventos',
-                    venue_address: 'Estr. Colina, 33 - Parque Primavera, Poços de Caldas - MG, 37700-001'
-                };
-            }
-        } catch (error) {
-            console.error('Error loading wedding data:', error);
-            this.weddingData = {
-                bride_name: 'Juliana',
-                groom_name: 'Felipe',
-                wedding_date: '2025-10-18', 
-                wedding_time: '15:30:00',
-                venue_name: 'Espaço Colinas Eventos',
-                venue_address: 'Estr. Colina, 33 - Parque Primavera, Poços de Caldas - MG, 37700-001'
-            };
-        }
+        this.weddingData = {
+            bride_name: 'Juliana',
+            groom_name: 'Felipe',
+            wedding_date: '2025-10-18', 
+            wedding_time: '15:30:00',
+            venue_name: 'Espaço Colinas Eventos',
+            venue_address: 'Estr. Colina, 33 - Parque Primavera, Poços de Caldas - MG, 37700-001'
+        };
         this.updateWeddingInfo();
     }
 
