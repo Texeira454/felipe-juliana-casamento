@@ -11,20 +11,17 @@ class WeddingSite {
     }
 
     async init() {
-        // Show loading screen
         this.showLoading();
         
-        // Load wedding data
+        // Remove a chamada à API para garantir que a data não seja alterada.
         await this.loadWeddingData();
+        this.loadGiftsFromLocalStorage();
         
-        // Initialize components
         this.initNavigation();
         this.initCountdown();
-        this.initGifts();
         this.initModal();
         this.initScrollEffects();
         
-        // Hide loading screen
         setTimeout(() => this.hideLoading(), 1500);
     }
 
@@ -42,11 +39,12 @@ class WeddingSite {
         }
     }
 
+    // Agora a função carrega os dados diretamente, sem depender de uma API.
     async loadWeddingData() {
         this.weddingData = {
             bride_name: 'Juliana',
             groom_name: 'Felipe',
-            wedding_date: '2025-10-18', 
+            wedding_date: '2025-10-19', 
             wedding_time: '15:30:00',
             venue_name: 'Espaço Colinas Eventos',
             venue_address: 'Estr. Colina, 33 - Parque Primavera, Poços de Caldas - MG, 37700-001'
@@ -160,7 +158,8 @@ class WeddingSite {
     initCountdown() {
         if (!this.weddingData || !this.weddingData.wedding_date) return;
 
-        const weddingDateTime = new Date(`${this.weddingData.wedding_date}T${this.weddingData.wedding_time}`);
+        // Corrigido para especificar o fuso horário (-03:00) para evitar problemas de contagem
+        const weddingDateTime = new Date('2025-10-18T15:30:00-03:00');
         
         if (this.countdownInterval) {
             clearInterval(this.countdownInterval);
@@ -196,61 +195,90 @@ class WeddingSite {
         }, 1000);
     }
 
-    initGifts() {
-        this.gifts = [
-            { id: 1, name: 'Suggar', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 2, name: 'Gás de cozinha', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 3, name: 'Sanduicheira', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 4, name: 'Liquidificador', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 5, name: 'Processador de alimentos', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 6, name: 'Mixer', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 7, name: 'Batedeira', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 8, name: 'Cafeteira', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 9, name: 'Jogo de Panelas', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 10, name: 'Jogo de copos', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 11, name: 'Jogo de xícaras', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 12, name: 'Jogo de talheres', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 13, name: 'Jogo de jantar', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 14, name: 'Jogo de sobremesas', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 15, name: 'Jogo de utensílios de cozinha', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 16, name: 'Fruteira', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 17, name: 'Panela elétrica de arroz', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 18, name: 'Panela de pressão', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 19, name: 'Balança de cozinha', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 20, name: 'Forma redonda para bolo', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 21, name: 'Assadeira de alumínio', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 22, name: 'Garrafa térmica', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 23, name: 'Tábua para carne', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 24, name: 'Potes de mantimento', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 25, name: 'Espremedor de frutas', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 26, name: 'Bowls', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 27, name: 'Chaleira', category: 'Cozinha', is_reserved: false, reserved_by: null },
-            { id: 28, name: 'TV', category: 'Sala', is_reserved: false, reserved_by: null },
-            { id: 29, name: 'Tapetes', category: 'Sala', is_reserved: false, reserved_by: null },
-            { id: 30, name: 'Cortinas', category: 'Sala', is_reserved: false, reserved_by: null },
-            { id: 31, name: 'Luminárias', category: 'Sala', is_reserved: false, reserved_by: null },
-            { id: 32, name: 'Ventilador', category: 'Sala', is_reserved: false, reserved_by: null },
-            { id: 33, name: 'Porta Chave', category: 'Sala', is_reserved: false, reserved_by: null },
-            { id: 34, name: 'Relógio de parede', category: 'Sala', is_reserved: false, reserved_by: null },
-            { id: 35, name: 'Cortinas', category: 'Quarto', is_reserved: false, reserved_by: null },
-            { id: 36, name: 'Tapetes', category: 'Quarto', is_reserved: false, reserved_by: null },
-            { id: 37, name: 'Escrivaninha', category: 'Quarto', is_reserved: false, reserved_by: null },
-            { id: 38, name: 'Cômoda', category: 'Quarto', is_reserved: false, reserved_by: null },
-            { id: 39, name: 'Sapateira', category: 'Quarto', is_reserved: false, reserved_by: null },
-            { id: 40, name: 'Criado mudo', category: 'Quarto', is_reserved: false, reserved_by: null },
-            { id: 41, name: 'Chuveiro', category: 'Banheiro', is_reserved: false, reserved_by: null },
-            { id: 42, name: 'Secador', category: 'Banheiro', is_reserved: false, reserved_by: null },
-            { id: 43, name: 'Barbeador elétrico', category: 'Banheiro', is_reserved: false, reserved_by: null },
-            { id: 44, name: 'Porta escova de dentes', category: 'Banheiro', is_reserved: false, reserved_by: null },
-            { id: 45, name: 'Saboneteira', category: 'Banheiro', is_reserved: false, reserved_by: null },
-            { id: 46, name: 'Varal de chão', category: 'Lavanderia', is_reserved: false, reserved_by: null },
-            { id: 47, name: 'Ferro de passar', category: 'Lavanderia', is_reserved: false, reserved_by: null },
-            { id: 48, name: 'Tábua de passar', category: 'Lavanderia', is_reserved: false, reserved_by: null },
-            { id: 49, name: 'Aspirador de pó', category: 'Lavanderia', is_reserved: false, reserved_by: null },
-            { id: 50, name: 'Escada', category: 'Lavanderia', is_reserved: false, reserved_by: null },
-            { id: 51, name: 'Kit de ferramentas', category: 'Lavanderia', is_reserved: false, reserved_by: null },
-        ];
-        
+    loadGiftsFromLocalStorage() {
+        const savedGifts = localStorage.getItem('weddingGifts');
+        if (savedGifts) {
+            this.gifts = JSON.parse(savedGifts);
+        } else {
+            this.gifts = [
+                { id: 1, name: 'Exaustor', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 2, name: 'Gás de cozinha', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 3, name: 'Sanduicheira', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 4, name: 'Liquidificador', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 5, name: 'Processador de alimentos', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 6, name: 'Mixer', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 7, name: 'Batedeira', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 8, name: 'Espremedor de frutas', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 9, name: 'Cafeteira', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 10, name: 'Chaleira', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 11, name: 'Garrafa térmica', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 12, name: 'Jogo de Panelas', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 13, name: 'Jogo de copos', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 14, name: 'Jogo de xícaras', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 15, name: 'Jogo de talheres', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 16, name: 'Jogo de jantar', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 17, name: 'Jogo de sobremesas', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 18, name: 'Jogo de utensílios de cozinha', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 19, name: 'Jogo americano', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 20, name: 'Sanduicheira', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 21, name: 'Fruteira de mesa', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 22, name: 'Escorredor de louças', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 23, name: 'Panela elétrica de arroz', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 24, name: 'Panela de pressão', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 25, name: 'Assadeira de alumínio', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 26, name: 'Garrafa térmica', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 27, name: 'Refratário', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 28, name: 'Tábua para carne', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 29, name: 'Potes de mantimento', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 30, name: 'Potes herméticos', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 31, name: 'Bowls', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 32, name: 'Frigideiras antiaderente', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 33, name: 'Boleira', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 34, name: 'Tábua de frios', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 35, name: 'Jarra de vidro', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 36, name: 'Saladeira', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 37, name: 'Bule', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 38, name: 'Amolador de facas', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 39, name: 'Espátulas de silicone', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 40, name: 'Balança de cozinha', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 41, name: 'Termômetro de cozinha', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 42, name: 'Kit mesa posta', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 43, name: 'Descanso de panela', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 44, name: 'Triturador de alho', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 45, name: 'Forma de fundo removível', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 46, name: 'Jogo de peneiras', category: 'Cozinha', is_reserved: false, reserved_by: null },
+                { id: 47, name: 'TV', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 48, name: 'Tapetes para sala', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 49, name: 'Cortinas para sala', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 50, name: 'Cortina black out para quarto', category: 'Quarto', is_reserved: false, reserved_by: null },
+                { id: 51, name: 'Luminárias', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 52, name: 'Ventilador', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 53, name: 'Porta chave', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 54, name: 'Relógio de parede', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 55, name: 'Almofadas para sofá', category: 'Sala', is_reserved: false, reserved_by: null },
+                { id: 56, name: 'Escrivaninha', category: 'Quarto', is_reserved: false, reserved_by: null },
+                { id: 57, name: 'Cadeira de escritório', category: 'Quarto', is_reserved: false, reserved_by: null },
+                { id: 58, name: 'Criado mudo', category: 'Quarto', is_reserved: false, reserved_by: null },
+                { id: 59, name: 'Cômoda', category: 'Quarto', is_reserved: false, reserved_by: null },
+                { id: 60, name: 'Sapateira', category: 'Quarto', is_reserved: false, reserved_by: null },
+                { id: 61, name: 'Espelho grande', category: 'Quarto', is_reserved: false, reserved_by: null },
+                { id: 62, name: 'Chuveiro', category: 'Banheiro', is_reserved: false, reserved_by: null },
+                { id: 63, name: 'Secador', category: 'Banheiro', is_reserved: false, reserved_by: null },
+                { id: 64, name: 'Barbeador elétrico', category: 'Banheiro', is_reserved: false, reserved_by: null },
+                { id: 65, name: 'Porta escova de dentes', category: 'Banheiro', is_reserved: false, reserved_by: null },
+                { id: 66, name: 'Saboneteira', category: 'Banheiro', is_reserved: false, reserved_by: null },
+                { id: 67, name: 'Varal de chão', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 68, name: 'Ferro de passar', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 69, name: 'Tábua de passar roupa', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 70, name: 'Aspirador de pó', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 71, name: 'Escada', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 72, name: 'Kit ferramentas', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 73, name: 'Robô aspirador', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 74, name: 'Caixas organizadoras', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+                { id: 75, name: 'Cesto de lixo grande', category: 'Lavanderia', is_reserved: false, reserved_by: null },
+            ];
+        }
+    
         this.categories = [...new Set(this.gifts.map(gift => gift.category))];
         
         this.updateGiftStats();
@@ -258,6 +286,10 @@ class WeddingSite {
         this.renderGifts();
     }
     
+    saveGiftsToLocalStorage() {
+        localStorage.setItem('weddingGifts', JSON.stringify(this.gifts));
+    }
+
     updateGiftStats() {
         const totalGifts = this.gifts.length;
         const reservedGifts = this.gifts.filter(gift => gift.is_reserved).length;
@@ -329,37 +361,61 @@ class WeddingSite {
     }
 
     createGiftCard(gift) {
-        const card = document.createElement('div');
-        card.className = `gift-card ${gift.is_reserved ? 'reserved' : ''}`;
-        
-        const giftImage = gift.image_url 
-            ? `<img src="${gift.image_url}" alt="${gift.name}" style="width: 100%; height: 100%; object-fit: cover;">`
-            : '<i class="fas fa-gift"></i>';
+    const card = document.createElement('div');
+    card.className = `gift-card ${gift.is_reserved ? 'reserved' : ''}`;
+    
+    const giftImage = gift.image_url 
+        ? `<img src="${gift.image_url}" alt="${gift.name}" style="width: 100%; height: 100%; object-fit: cover;">`
+        : '<i class="fas fa-gift"></i>';
 
-        card.innerHTML = `
-            <div class="gift-image">
-                ${giftImage}
+    card.innerHTML = `
+        <div class="gift-image">
+            ${giftImage}
+        </div>
+        <div class="gift-content">
+            <h3 class="gift-name">${gift.name}</h3>
+            <p class="gift-description">${gift.description || ''}</p>
+            <div class="gift-meta">
+                <span class="gift-category">${gift.category}</span>
+                <span class="gift-price">${gift.price_range || ''}</span>
             </div>
-            <div class="gift-content">
-                <h3 class="gift-name">${gift.name}</h3>
-                <p class="gift-description">${gift.description || ''}</p>
-                <div class="gift-meta">
-                    <span class="gift-category">${gift.category}</span>
-                    <span class="gift-price">${gift.price_range || ''}</span>
-                </div>
-                ${gift.is_reserved 
-                    ? `<div class="reserved-by">Reservado por: ${gift.reserved_by}</div>`
-                    : `<div class="gift-actions">
-                         <button class="btn-reserve" onclick="weddingSite.openReservationModal(${gift.id})">
-                             <i class="fas fa-heart"></i> Reservar
-                         </button>
-                       </div>`
-                }
-            </div>
-        `;
+            ${gift.is_reserved 
+                ? `<div class="reserved-by">Reservado por: ${gift.reserved_by}</div>
+                   <div class="gift-actions">
+                        <button class="btn-cancel" onclick="weddingSite.cancelReservation(${gift.id})">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                   </div>`
+                : `<div class="gift-actions">
+                      <button class="btn-reserve" onclick="weddingSite.openReservationModal(${gift.id})">
+                          <i class="fas fa-heart"></i> Reservar
+                      </button>
+                   </div>`
+            }
+        </div>
+    `;
 
-        return card;
+    return card;
+}
+
+    cancelReservation(giftId) {
+    if (!confirm('Tem certeza que deseja cancelar a reserva deste presente?')) {
+        return;
     }
+
+    const giftIndex = this.gifts.findIndex(g => g.id === giftId);
+    if (giftIndex !== -1) {
+        this.gifts[giftIndex].is_reserved = false;
+        this.gifts[giftIndex].reserved_by = null;
+        this.saveGiftsToLocalStorage();
+        alert(`Reserva cancelada com sucesso!`);
+        
+        this.updateGiftStats();
+        this.renderGifts();
+    } else {
+        alert('Erro ao cancelar reserva. Tente novamente.');
+    }
+}
 
     initModal() {
         const modal = document.getElementById('gift-modal');
@@ -460,6 +516,7 @@ class WeddingSite {
             if (giftIndex !== -1) {
                 this.gifts[giftIndex].is_reserved = true;
                 this.gifts[giftIndex].reserved_by = guestName;
+                this.saveGiftsToLocalStorage();
                 alert(`Presente reservado com sucesso para ${guestName}! Obrigado!`);
                 
                 this.closeModal();
