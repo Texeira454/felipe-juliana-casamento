@@ -4,43 +4,1135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juliana & Felipe - Nosso Casamento</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color Palette (Azul Serenity) */
+            --primary-color: #9FB8D3;
+            --primary-dark: #84A3C8;
+            --secondary-color: #F0F8FF;
+            --accent-color: #EAF2FF;
+            --text-dark: #3A4B5D;
+            --text-light: #6A7B8E;
+            --white: #ffffff;
+            --black: #000000;
+            --gray-light: #F8F8F8;
+            --gray-medium: #e0e0e0;
+            --success: #28a745;
+            --danger: #dc3545;
+            
+            /* Typography */
+            --font-primary: 'Playfair Display', serif;
+            --font-secondary: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 3rem;
+            --spacing-xl: 4rem;
+            
+            /* Shadows */
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.2);
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity var(--transition-slow), visibility var(--transition-slow);
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .heart-animation {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all var(--transition-medium);
+            padding: var(--spacing-sm) 0;
+        }
+
+        .navbar.scrolled {
+            background: var(--white);
+            box-shadow: var(--shadow-light);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo .couple-names {
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-md);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width var(--transition-medium);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger .bar {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            transition: var(--transition-fast);
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 var(--spacing-sm);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-title {
+            font-family: var(--font-primary);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+
+        .bride-name,
+        .groom-name {
+            display: inline-block;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .bride-name {
+            animation-delay: 0.2s;
+        }
+
+        .ampersand {
+            font-size: 0.8em;
+            margin: 0 var(--spacing-xs);
+            opacity: 0.8;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .groom-name {
+            animation-delay: 0.6s;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-md);
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .wedding-date {
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .countdown-container {
+            margin-bottom: var(--spacing-lg);
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .countdown-container h3 {
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: var(--spacing-sm);
+            border-radius: 10px;
+            min-width: 80px;
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 600;
+            font-family: var(--font-primary);
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1.4s both;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all var(--transition-medium);
+            border: 2px solid transparent;
+        }
+
+        .cta-button.primary {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        .cta-button.primary:hover {
+            background: transparent;
+            color: var(--white);
+            border-color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--white);
+            border-color: var(--white);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--white);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: var(--spacing-md);
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow {
+            font-size: 1.5rem;
+            color: var(--white);
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--gray-light);
+        }
+
+        .love-story {
+            display: grid;
+            gap: var(--spacing-lg);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .story-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            transition: transform var(--transition-medium);
+        }
+
+        .story-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-icon {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .story-content h3 {
+            font-family: var(--font-primary);
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-dark);
+        }
+
+        .story-content p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Details Section */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .detail-card {
+            background: var(--white);
+            padding: var(--spacing-md);
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: all var(--transition-medium);
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .detail-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-sm);
+            color: var(--white);
+            font-size: 2rem;
+        }
+
+        .detail-card h3 {
+            font-family: var(--font-primary);
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-dark);
+        }
+
+        .detail-card p {
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-dark);
+        }
+
+        .detail-card span {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .timeline {
+            text-align: left;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .event {
+            color: var(--text-dark);
+        }
+
+        /* Gifts Section */
+        .gifts {
+            background: var(--secondary-color);
+        }
+
+        .gift-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--white);
+            padding: var(--spacing-md);
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            min-width: 150px;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .gift-filters {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .gift-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: all var(--transition-medium);
+            position: relative;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .gift-card.reserved {
+            opacity: 0.7;
+        }
+
+        .gift-card.reserved::after {
+            content: 'RESERVADO';
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            background: var(--danger);
+            color: var(--white);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .gift-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gray-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 3rem;
+        }
+
+        .gift-content {
+            padding: var(--spacing-md);
+        }
+
+        .gift-name {
+            font-family: var(--font-primary);
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-dark);
+        }
+
+        .gift-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.5;
+        }
+
+        .gift-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .gift-category {
+            background: var(--accent-color);
+            color: var(--text-dark);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .gift-price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .gift-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .btn-reserve {
+            flex: 1;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-reserve:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-reserve:disabled {
+            background: var(--gray-medium);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--danger);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+
+        .reserved-by {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            font-style: italic;
+            text-align: center;
+            padding: var(--spacing-xs);
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            width: 50px;
+            text-align: center;
+        }
+
+        .contact-item h4 {
+            font-family: var(--font-primary);
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-dark);
+        }
+
+        .contact-item p {
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--secondary-color);
+            color: var(--text-dark);
+            padding: var(--spacing-md) 0;
+            text-align: center;
+        }
+
+        .footer i {
+            color: var(--primary-color);
+            margin: 0 var(--spacing-xs);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn var(--transition-medium);
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn var(--transition-medium);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-medium);
+        }
+
+        .modal-header h3 {
+            font-family: var(--font-primary);
+            color: var(--text-dark);
+        }
+
+        .close {
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color var(--transition-fast);
+        }
+
+        .close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: var(--spacing-md);
+        }
+
+        .gift-details {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 2px solid var(--gray-medium);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+        }
+
+        .btn-cancel-modal {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--gray-medium);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-cancel-modal:hover {
+            background: var(--gray-medium);
+            color: var(--text-dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: var(--transition-medium);
+                box-shadow: var(--shadow-medium);
+                padding: var(--spacing-md) 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .countdown {
+                gap: var(--spacing-sm);
+            }
+
+            .countdown-item {
+                min-width: 60px;
+                padding: var(--spacing-xs);
+            }
+
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gift-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gift-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn-cancel,
+            .btn-reserve,
+            .btn-cancel-modal,
+            .btn-reserve-modal {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --spacing-sm: 0.75rem;
+                --spacing-md: 1.5rem;
+                --spacing-lg: 2rem;
+                --spacing-xl: 3rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .countdown-item {
+                min-width: 50px;
+            }
+
+            .countdown-number {
+                font-size: 1.2rem;
+            }
+
+            .story-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+
+        .mb-sm { margin-bottom: var(--spacing-sm); }
+        .mb-md { margin-bottom: var(--spacing-md); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+
+        .mt-sm { margin-top: var(--spacing-sm); }
+        .mt-md { margin-top: var(--spacing-md); }
+        .mt-lg { margin-top: var(--spacing-lg); }
+
+        .hidden { display: none; }
+        .visible { display: block; }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script>
+        // Configuração do seu projeto Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvNUuSKixQN9i4VWkvlVU4-eGkkGb_js",
+            authDomain: "felipe-juliana-casamento.firebaseapp.com",
+            projectId: "felipe-juliana-casamento",
+            storageBucket: "felipe-juliana-casamento.firebasestorage.app",
+            messagingSenderId: "951298865422",
+            appId: "1:951298865422:web:7a843c95a9f7aa6052ff5f"
+        };
+        // Inicializar o Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
 </head>
 <body>
-    <!-- Loading Screen -->
+
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
-            <div class="heart-animation">
-                <i class="fas fa-heart"></i>
-            </div>
+            <i class="fas fa-heart heart-animation"></i>
             <p>Carregando nosso momento especial...</p>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav id="navbar" class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <span class="couple-names">J&F</span>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">Nossa História</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#details" class="nav-link">Detalhes</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#gifts" class="nav-link">Lista de Presentes</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contato</a>
-                </li>
+            <a href="#" class="nav-logo">
+                <span class="couple-names">J & F</span>
+            </a>
+            <ul id="nav-menu" class="nav-menu">
+                <li><a href="#home" class="nav-link">Início</a></li>
+                <li><a href="#about" class="nav-link">Nossa História</a></li>
+                <li><a href="#details" class="nav-link">Detalhes</a></li>
+                <li><a href="#gifts" class="nav-link">Lista de Presentes</a></li>
+                <li><a href="#contact" class="nav-link">Contato</a></li>
             </ul>
             <div class="hamburger" id="hamburger">
                 <span class="bar"></span>
@@ -50,247 +1142,154 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="hero-overlay"></div>
-        </div>
+    <header id="home" class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="bride-name" id="bride-name">Juliana</span>
-                    <span class="ampersand">&</span>
-                    <span class="groom-name" id="groom-name">Felipe</span>
-                </h1>
-                <p class="hero-subtitle">Celebrando nosso amor eterno</p>
-                <div class="wedding-date" id="wedding-date">
-                    <i class="fas fa-calendar-heart"></i>
-                    <span>18 de Outubro, 2025</span>
-                </div>
+            <h1 class="hero-title">
+                <span class="bride-name">Juliana</span> <span class="ampersand">&</span> <span class="groom-name">Felipe</span>
+            </h1>
+            <p class="hero-subtitle">Convidam para a celebração do seu casamento.</p>
+            <div class="wedding-date">
+                <i class="fas fa-calendar-alt"></i>
+                <span>18 de outubro de 2025</span>
             </div>
             <div class="countdown-container">
                 <h3>Contagem Regressiva</h3>
-                <div class="countdown" id="countdown">
+                <div id="countdown" class="countdown">
                     <div class="countdown-item">
-                        <span class="countdown-number" id="days">0</span>
+                        <span id="days" class="countdown-number">00</span>
                         <span class="countdown-label">Dias</span>
                     </div>
                     <div class="countdown-item">
-                        <span class="countdown-number" id="hours">0</span>
+                        <span id="hours" class="countdown-number">00</span>
                         <span class="countdown-label">Horas</span>
                     </div>
                     <div class="countdown-item">
-                        <span class="countdown-number" id="minutes">0</span>
+                        <span id="minutes" class="countdown-number">00</span>
                         <span class="countdown-label">Minutos</span>
                     </div>
                     <div class="countdown-item">
-                        <span class="countdown-number" id="seconds">0</span>
+                        <span id="seconds" class="countdown-number">00</span>
                         <span class="countdown-label">Segundos</span>
                     </div>
                 </div>
             </div>
             <div class="hero-cta">
                 <a href="#gifts" class="cta-button primary">
-                    <i class="fas fa-gift"></i>
-                    Ver Lista de Presentes
+                    <i class="fas fa-gift"></i> Lista de Presentes
                 </a>
                 <a href="#details" class="cta-button secondary">
-                    <i class="fas fa-info-circle"></i>
-                    Detalhes do Evento
+                    <i class="fas fa-map-marker-alt"></i> Detalhes
                 </a>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </div>
-    </section>
+        <a href="#about" class="scroll-indicator">
+            <i class="fas fa-arrow-down scroll-arrow"></i>
+        </a>
+    </header>
 
-    <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <div class="section-header">
+            <header class="section-header">
                 <h2 class="section-title">Nossa História</h2>
-                <p class="section-subtitle">Uma jornada de amor que começou há alguns anos</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <div class="love-story">
-                        <div class="story-item">
-                            <div class="story-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="story-content">
-                                <h3>Como nos conhecemos</h3>
-                                <p>Nossos caminhos se cruzaram de forma mágica em 2023, e desde então sabemos que fomos feitos um para o outro.</p>
-                            </div>
-                        </div>
-                        <div class="story-item">
-                            <div class="story-icon">
-                                <i class="fas fa-ring"></i>
-                            </div>
-                            <div class="story-content">
-                                <h3>O Pedido</h3>
-                                <p>Em um momento inesquecível, decidimos oficializar nosso amor e começar esta nova jornada juntos.</p>
-                            </div>
-                        </div>
-                        <div class="story-item">
-                            <div class="story-icon">
-                                <i class="fas fa-church"></i>
-                            </div>
-                            <div class="story-content">
-                                <h3>O Grande Dia</h3>
-                                <p>Agora chegou o momento de celebrar nosso amor com as pessoas mais especiais de nossas vidas.</p>
-                            </div>
-                        </div>
+                <p class="section-subtitle">A jornada que nos uniu, um passo de cada vez.</p>
+            </header>
+            <div class="love-story">
+                <div class="story-item">
+                    <div class="story-icon"><i class="fas fa-heart"></i></div>
+                    <div class="story-content">
+                        <h3>Como tudo começou</h3>
+                        <p>Nosso primeiro encontro, o início de uma jornada inesperada e cheia de amor.</p>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-icon"><i class="fas fa-ring"></i></div>
+                    <div class="story-content">
+                        <h3>O Pedido</h3>
+                        <p>O dia em que decidimos que o nosso futuro seria juntos para sempre.</p>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-icon"><i class="fas fa-church"></i></div>
+                    <div class="story-content">
+                        <h3>O Grande Dia</h3>
+                        <p>O momento de celebrar nosso amor e selar nossa união com quem mais amamos.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Details Section -->
     <section id="details" class="details">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Detalhes do Casamento</h2>
-                <p class="section-subtitle">Todas as informações importantes sobre nosso grande dia</p>
-            </div>
+            <header class="section-header">
+                <h2 class="section-title">Detalhes do Evento</h2>
+                <p class="section-subtitle">Todas as informações importantes para o nosso grande dia.</p>
+            </header>
             <div class="details-grid">
                 <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <h3>Data</h3>
-                    <p id="ceremony-date">18 de Outubro, 2025</p>
-                    <span id="ceremony-time">15:30</span>
+                    <div class="detail-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3>Data e Horário</h3>
+                    <p id="ceremony-date">18 de outubro de 2025</p>
+                    <p id="ceremony-time">15:30 - Início da Cerimônia</p>
                 </div>
                 <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>Local</h3>
+                    <div class="detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Local da Cerimônia e Festa</h3>
                     <p id="venue-name">Espaço Colinas Eventos</p>
-                    <span id="venue-address">Estr. Colina, 33 - Parque Primavera, Poços de Caldas - MG, 37700-001</span>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>Cronograma</h3>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <span class="time">15:30</span>
-                            <span class="event">Cerimônia</span>
-                        </div>                  
-                    </div>
+                    <p id="venue-address">Estr. Colina, 33 - Parque Primavera, Poços de Caldas - MG, 37700-001</p>s
                 </div>
             </div>
+            
         </div>
     </section>
 
-    <!-- Gifts Section -->
     <section id="gifts" class="gifts">
         <div class="container">
-            <div class="section-header">
+            <header class="section-header">
                 <h2 class="section-title">Lista de Presentes</h2>
-                <p class="section-subtitle">Sua presença é o maior presente, mas se desejar nos presentear, ficamos muito gratos!</p>
-            </div>
+                <p class="section-subtitle">Sua presença é o nosso maior presente! Se você quiser nos presentear, nos ajudará a começar a nossa vida juntos. Somos muito gratos!</p>
+            </header>
             
-            <!-- Gift Stats -->
-            <div class="gift-stats" id="gift-stats">
+            <div class="gift-stats">
                 <div class="stat-item">
-                    <span class="stat-number" id="total-gifts">0</span>
+                    <span id="total-gifts" class="stat-number">0</span>
                     <span class="stat-label">Total de Presentes</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number" id="available-gifts">0</span>
+                    <span id="available-gifts" class="stat-number">0</span>
                     <span class="stat-label">Disponíveis</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number" id="reserved-gifts">0</span>
+                    <span id="reserved-gifts" class="stat-number">0</span>
                     <span class="stat-label">Reservados</span>
                 </div>
             </div>
+            
+            <div id="category-filters" class="gift-filters">
+                </div>
 
-            <!-- Gift Categories Filter -->
-            <div class="gift-filters">
-                <button class="filter-btn active" data-category="all">Todos</button>
-                <div id="category-filters"></div>
-            </div>
-
-            <!-- Gift Grid -->
-            <div class="gift-grid" id="gift-grid">
-                <!-- Gifts will be loaded here -->
-            </div>
+            <div id="gift-grid" class="gift-grid">
+                </div>
         </div>
     </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Contato</h2>
-                <p class="section-subtitle">Entre em contato conosco para qualquer dúvida</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>Telefone</h4>
-                            <p>(35) 98708-8204</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p>felipetexgol@outlook.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-instagram"></i>
-                        <div>
-                            <h4>Instagram</h4>
-                            <p>@coeteixeira_</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-text">
-                    <p>&copy; 2025 Juliana & Felipe. Feito com <i class="fas fa-heart"></i> para nosso grande dia.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Gift Reservation Modal -->
+    
     <div id="gift-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
+            <header class="modal-header">
                 <h3 id="modal-title">Reservar Presente</h3>
                 <span class="close" id="modal-close">&times;</span>
-            </div>
+            </header>
             <div class="modal-body">
-                <div class="gift-details" id="modal-gift-details">
-                    <!-- Gift details will be loaded here -->
-                </div>
+                <div id="modal-gift-details" class="gift-details"></div>
                 <form id="reservation-form">
                     <div class="form-group">
                         <label for="guest-name">Seu Nome:</label>
-                        <input type="text" id="guest-name" name="guest-name" required>
+                        <input type="text" id="guest-name" name="guestName" required>
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn-cancel" id="cancel-reservation">Cancelar</button>
+                        <button type="button" class="btn-cancel-modal" id="cancel-reservation">Cancelar</button>
                         <button type="submit" class="btn-reserve">Reservar Presente</button>
                     </div>
                 </form>
@@ -298,7 +1297,38 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <header class="section-header">
+                <h2 class="section-title">Contato</h2>
+                <p class="section-subtitle">Estamos ansiosos para compartilhar nosso grande dia com você! Fique à vontade para entrar em contato se precisar de alguma informação.</p>
+            </header>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <h4>Telefone</h4>
+                        <p>+55 35 9999-9999</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>E-mail</h4>
+                        <p>contato@casamento.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Juliana & Felipe. Feito com <i class="fas fa-heart"></i>. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
+
 </body>
 </html>
