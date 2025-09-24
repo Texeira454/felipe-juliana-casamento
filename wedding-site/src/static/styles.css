@@ -324,10 +324,12 @@ body {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: 1rem 2rem;
     border-radius: 50px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: all var(--transition-medium);
     border: 2px solid transparent;
 }
@@ -695,7 +697,7 @@ section {
 
 .btn-reserve {
     flex: 1;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
     background: var(--primary-color);
     color: var(--white);
     border: none;
@@ -714,6 +716,22 @@ section {
     background: var(--gray-medium);
     cursor: not-allowed;
     transform: none;
+}
+
+.btn-cancel {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--danger);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
 }
 
 .reserved-by {
@@ -741,11 +759,12 @@ section {
     background: var(--white);
     border-radius: 15px;
     box-shadow: var(--shadow-light);
-    transition: transform var(--transition-medium);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .contact-item:hover {
     transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
 }
 
 .contact-item i {
@@ -767,8 +786,8 @@ section {
 
 /* Footer */
 .footer {
-    background: var(--text-dark);
-    color: var(--white);
+    background: var(--secondary-color);
+    color: var(--text-dark);
     padding: var(--spacing-md) 0;
     text-align: center;
 }
@@ -871,7 +890,7 @@ section {
     justify-content: flex-end;
 }
 
-.btn-cancel {
+.btn-cancel-modal {
     padding: var(--spacing-sm) var(--spacing-md);
     background: transparent;
     color: var(--text-light);
@@ -881,7 +900,7 @@ section {
     transition: all var(--transition-fast);
 }
 
-.btn-cancel:hover {
+.btn-cancel-modal:hover {
     background: var(--gray-medium);
     color: var(--text-dark);
 }
@@ -975,7 +994,9 @@ section {
     }
 
     .btn-cancel,
-    .btn-reserve {
+    .btn-reserve,
+    .btn-cancel-modal,
+    .btn-reserve-modal {
         width: 100%;
     }
 }
